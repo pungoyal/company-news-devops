@@ -11,9 +11,12 @@ module MCollective
 
       action "war" do
         validate :source, String
-        p '*'*10
-        p request[:source]
-        p '*'*10
+        `wget #{request[:source]} -o companyNews.war`
+        `sudo service tomcat6 stop`
+        `rm -f /var/lib/tomcat6/webapps/*`
+        `mv companyNews.war /var/lib/tomcat6/webapps/`
+        `sudo chown tomcat:tomcat /var/lib/tomcat6/webapps/companyNews.war`
+        `sudo service tomcat6 start`
       end
     end
   end
